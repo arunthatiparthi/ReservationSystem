@@ -1,0 +1,90 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'password_style.css' %}">
+<script src="{% static 'password_field.js' %}" defer></script>
+
+<style>
+    .auth-container {
+        min-height: 85vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 3rem 1rem;
+    }
+    
+    .auth-card {
+        width: 100%;
+        max-width: 500px;
+    }
+    
+    .auth-card .card {
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06), 0 20px 40px rgba(0, 0, 0, 0.04);
+    }
+    
+    .auth-card .card-body {
+        padding: 2.5rem;
+    }
+    
+    .auth-card .card-footer {
+        padding: 2rem 2.5rem;
+        background: #f8fafc;
+    }
+    
+    .error-message {
+        background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+        color: white;
+        padding: 1rem 1.25rem;
+        border-radius: 10px;
+        margin-top: 1.25rem;
+        text-align: center;
+        font-weight: 500;
+        box-shadow: 0 2px 8px rgba(220, 38, 38, 0.2);
+    }
+</style>
+
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title text-center h3 mb-0">Create Account</div>
+            </div>
+            <div class="card-body">
+                <div class="container-fluid">
+                    <form action="{% url 'signup' %}" method="post" id="registration-form">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="email" class="control-label">Email</label>
+                            <input name='email' class="form-control" type="email" id="email" placeholder="your@email.com" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="username" class="control-label">Username</label>
+                            <input name='name' id="name" class="form-control" type="text" placeholder="Choose a username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="control-label">Password</label>
+                            <div class="password-container">
+                                <input type="password" id="password" name="password" class="form-control" placeholder="Create a strong password" required>
+                                <img src="{% static 'eye-open.png' %}" class="toggle-password" 
+                                  data-eye-open="{% static 'eye-open.png' %}" 
+                                  data-eye-close="{% static 'eye-close.png' %}" 
+                                  onclick="togglePassword('password', this)">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phno" class="control-label">Mobile Number</label>
+                            <input name='phno' id="phno" class="form-control" type="tel" placeholder="1234567890" required>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="card-footer text-center">
+                <button class="btn btn-primary w-100" form="registration-form">Create Account</button>
+                <p class="mt-3 mb-0" style="color: #64748b;">Already have an account? <a href="{% url 'signin' %}" style="color: #667eea; font-weight: 600;">Sign in</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}b7280;">Already have an account? <a href="{% url 'signin' %}" style="color: #1e3a8

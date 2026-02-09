@@ -1,0 +1,156 @@
+{% extends 'base.html' %} {% block content %}
+
+<style>
+    .bookings-container {
+        padding: 3.5rem 1rem;
+        min-height: 85vh;
+    }
+    
+    .bookings-container .card {
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06), 0 20px 40px rgba(0, 0, 0, 0.04);
+    }
+    
+    .table-container {
+        overflow-x: auto;
+        border-radius: 12px;
+    }
+    
+    .table {
+        margin-bottom: 0;
+    }
+    
+    .table thead th {
+        color: white;
+        font-weight: 600;
+        border: none;
+        padding: 1.25rem 1rem;
+        text-transform: uppercase;
+        font-size: 0.8125rem;
+        letter-spacing: 0.05em;
+    }
+    
+    .table tbody td {
+        padding: 1.25rem 1rem;
+        vertical-align: middle;
+        border-color: #e2e8f0;
+        font-weight: 500;
+    }
+    
+    .status-badge {
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.8125rem;
+        display: inline-block;
+        letter-spacing: 0.025em;
+        text-transform: uppercase;
+    }
+    
+    .status-confirmed {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+        box-shadow: 0 2px 8px rgba(16, 185, 129, 0.2);
+    }
+    
+    .cancel-section {
+        margin-top: 3.5rem;
+    }
+    
+    .cancel-section .card {
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+    }
+    
+    .cancel-section .card-body {
+        padding: 2rem;
+    }
+    
+    .cancel-section .card-footer {
+        padding: 1.5rem 2rem;
+        background: #f8fafc;
+    }
+</style>
+
+<div class="bookings-container">
+    <div class="container">
+        {% for message in messages %}
+        {% if message.tags %}
+        <div class="alert alert-{{ message.tags }}" style="border-radius: 12px; animation: fadeIn 0.5s ease;">{{ message }}</div>
+        {% endif %}
+        {% endfor %}
+        
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title h3 mb-0">My Bookings</div>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-container">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>6px
+                                <th class="text-center">ID</th>
+                                <th class="text-center">USER</th>
+                                <th class="text-center">BUS</th>
+                                <th class="text-center">FROM</th>
+                                <th class="text-center">TO</th>
+                                <th class="text-center">SEATS</th>
+                                <th class="text-center">PRICE</th>
+                                <th class="text-center">DATE</th>
+                                <th class="text-center">TIME</th>
+                                <th class="text-center">STATUS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in book_list %}
+                            <tr>
+                                <td class="text-center"><strong>#{{row.id}}</strong></td>
+                                <td class="text-center">{{name}}</td>
+                                <td class="text-center">{{row.bus_name}}</td>
+                                <td class="text-center">{{row.src}}</td>
+                                <td class="text-center">{{row.dest}}</td>
+                                <td class="text-center"><strong>{{row.nos}}</strong></td>
+                                <td class="text-center"><strong>₹{{row.price}}</strong></td>
+                                <td class="text-center">{{row.date}}</td>
+                                <td class="text-center">{{row.time}}</td>
+                                <td class="text-center">
+                                    <span class="status-badge status-confirmed">{{row.status}}</span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row justify-content-center cancel-section">
+            <div class="col-lg-5 col-md-7 col-sm-10">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title h4 mb-0">Cancel Booking</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="container-fluid">
+                            <form action="{% url 'cancellings' %}" method="post" id="cancel-form">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <label for="bus_id" class="control-label">Booking ID</label>
+                                    <input name='bus_id' class="form-control" type="number" id="bus_id" placeholder="Enter booking ID to cancel">
+                                </div>
+                                {% if error %}
+                                <div class="alert alert-danger" style="border-radius: 6px;">
+                                    {{error}}
+                                </div>
+                                {% endif %}
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <button class="btn btn-danger w-100" form="cancel-form">Cancel Booking</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

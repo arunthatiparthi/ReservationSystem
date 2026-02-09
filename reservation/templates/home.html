@@ -1,0 +1,390 @@
+{% extends 'base.html' %} {% block content %}
+<style>
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+    }
+    
+    @keyframes slideInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    
+    @keyframes slideInRight {
+        from {
+            opacity: 0;
+            transform: translateX(50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes pulse {
+        0%, 100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+        50% {
+            transform: scale(1.05);
+            opacity: 0.8;
+        }
+    }
+    
+    @keyframes shimmer {
+        0% {
+            background-position: -1000px 0;
+        }
+        100% {
+            background-position: 1000px 0;
+        }
+    }
+    
+    .hero-section {
+        min-height: 90vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem 1rem;
+        background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 50%, #f8fafc 100%);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    /* Animated background shapes */
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        background: linear-gradient(135deg, rgba(30, 58, 138, 0.1) 0%, rgba(37, 99, 235, 0.05) 100%);
+        border-radius: 50%;
+        top: -250px;
+        right: -250px;
+        animation: float 6s ease-in-out infinite;
+    }
+    
+    .hero-section::after {
+        content: '';
+        position: absolute;
+        width: 400px;
+        height: 400px;
+        background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(30, 58, 138, 0.05) 100%);
+        border-radius: 50%;
+        bottom: -200px;
+        left: -200px;
+        animation: float 8s ease-in-out infinite reverse;
+    }
+    
+    .hero-content {
+        max-width: 1200px;
+        width: 100%;
+        position: relative;
+        z-index: 1;
+        animation: fadeInUp 0.8s ease-out;
+    }
+    
+    .hero-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 32px;
+        padding: 4rem 3rem;
+        box-shadow: 0 20px 60px rgba(30, 58, 138, 0.15), 0 8px 24px rgba(0, 0, 0, 0.08);
+        text-align: center;
+        border: 1px solid rgba(226, 232, 240, 0.8);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .hero-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -1000px;
+        width: 200%;
+        height: 6px;
+        background: linear-gradient(90deg, transparent, #1e3a8a, #2563eb, #1e3a8a, transparent);
+        animation: shimmer 3s infinite;
+    }
+    
+    .bus-icon {
+        font-size: 6rem;
+        margin-bottom: 2rem;
+        animation: float 3s ease-in-out infinite;
+        display: inline-block;
+        filter: drop-shadow(0 4px 12px rgba(30, 58, 138, 0.3));
+    }
+    
+    .hero-title {
+        font-size: 3.5rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #3b82f6 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1.5rem;
+        line-height: 1.2;
+        letter-spacing: -0.03em;
+        animation: slideInLeft 0.8s ease-out;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.35rem;
+        color: #475569;
+        margin-bottom: 3rem;
+        line-height: 1.8;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+        font-weight: 400;
+        animation: slideInRight 0.8s ease-out 0.2s both;
+    }
+    
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        margin: 3rem 0;
+        animation: fadeInUp 0.8s ease-out 0.4s both;
+    }
+    
+    .stat-card {
+        background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+        padding: 2rem;
+        border-radius: 20px;
+        color: white;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .stat-card::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        transform: rotate(45deg);
+        transition: all 0.6s;
+    }
+    
+    .stat-card:hover::before {
+        left: 100%;
+    }
+    
+    .stat-card:hover {
+        transform: translateY(-8px) scale(1.05);
+        box-shadow: 0 20px 40px rgba(30, 58, 138, 0.4);
+    }
+    
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+        position: relative;
+    }
+    
+    .stat-label {
+        font-size: 1rem;
+        opacity: 0.9;
+        font-weight: 500;
+        position: relative;
+    }
+    
+    .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2.5rem;
+        margin-top: 4rem;
+        animation: fadeInUp 0.8s ease-out 0.6s both;
+    }
+    
+    .feature-item {
+        background: white;
+        padding: 3rem 2rem;
+        border-radius: 24px;
+        border: 2px solid #e2e8f0;
+        text-align: center;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+    }
+    
+    .feature-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(30, 58, 138, 0.05) 0%, rgba(37, 99, 235, 0.05) 100%);
+        transition: left 0.5s;
+    }
+    
+    .feature-item:hover::before {
+        left: 0;
+    }
+    
+    .feature-item:hover {
+        border-color: #1e3a8a;
+        box-shadow: 0 16px 48px rgba(30, 58, 138, 0.2);
+        transform: translateY(-12px) scale(1.02);
+    }
+    
+    .feature-icon {
+        font-size: 4rem;
+        margin-bottom: 1.5rem;
+        display: inline-block;
+        transition: all 0.3s;
+        position: relative;
+    }
+    
+    .feature-item:hover .feature-icon {
+        transform: scale(1.2) rotate(5deg);
+        animation: pulse 1s infinite;
+    }
+    
+    .feature-title {
+        font-weight: 700;
+        color: #1e3a8a;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        position: relative;
+    }
+    
+    .feature-description {
+        color: #64748b;
+        font-size: 1rem;
+        line-height: 1.6;
+        position: relative;
+    }
+    
+    .cta-button {
+        display: inline-block;
+        padding: 1.25rem 3rem;
+        background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+        color: white;
+        border-radius: 16px;
+        font-size: 1.25rem;
+        font-weight: 700;
+        text-decoration: none;
+        margin-top: 2rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 8px 24px rgba(30, 58, 138, 0.3);
+        position: relative;
+        overflow: hidden;
+        animation: fadeInUp 0.8s ease-out 0.8s both;
+    }
+    
+    .cta-button::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+    }
+    
+    .cta-button:hover::before {
+        width: 300px;
+        height: 300px;
+    }
+    
+    .cta-button:hover {
+        transform: translateY(-4px) scale(1.05);
+        box-shadow: 0 16px 48px rgba(30, 58, 138, 0.5);
+    }
+    
+    .cta-button span {
+        position: relative;
+        z-index: 1;
+    }
+</style>
+
+<div class="hero-section">
+    <div class="hero-content">
+        <div class="hero-card">
+            <div class="bus-icon">🚌</div>
+            <h1 class="hero-title">Smart Bus Reservation System</h1>
+            <p class="hero-subtitle">Experience the future of bus travel. Book tickets instantly, track your bus in real-time, and enjoy a comfortable journey across India.</p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">227K+</div>
+                    <div class="stat-label">Buses Available</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">51+</div>
+                    <div class="stat-label">Cities Connected</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Customer Support</div>
+                </div>
+            </div>
+            
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-title">Instant Booking</div>
+                    <div class="feature-description">Book your tickets in seconds with our lightning-fast booking system</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">💺</div>
+                    <div class="feature-title">Comfortable Seats</div>
+                    <div class="feature-description">Choose from AC Sleeper, Volvo, and premium bus options</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🎫</div>
+                    <div class="feature-title">Digital Tickets</div>
+                    <div class="feature-description">Get instant e-tickets delivered to your email and phone</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔒</div>
+                    <div class="feature-title">Secure Payment</div>
+                    <div class="feature-description">100% safe and encrypted payment gateway</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📍</div>
+                    <div class="feature-title">Live Tracking</div>
+                    <div class="feature-description">Track your bus location in real-time</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">⭐</div>
+                    <div class="feature-title">Best Prices</div>
+                    <div class="feature-description">Get the best deals and offers on every booking</div>
+                </div>
+            </div>
+            
+            <a href="{% url 'findbus' %}" class="cta-button">
+                <span>Start Your Journey Now →</span>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

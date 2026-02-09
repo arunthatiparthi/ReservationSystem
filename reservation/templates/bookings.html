@@ -1,0 +1,141 @@
+{% extends 'base.html' %} {% block content %}
+
+<style>
+    .success-container {
+        min-height: 85vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 3rem 1rem;
+    }
+    
+    .success-card {
+        width: 100%;
+        max-width: 700px;
+    }
+    
+    .success-alert {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+        border-radius: 16px;
+        padding: 2.5rem 2rem;
+        text-align: center;
+        border: none;
+        box-shadow: 0 4px 24px rgba(16, 185, 129, 0.25);
+        margin-bottom: 2rem;
+    }
+    
+    .success-alert h3 {
+        font-weight: 700;
+        margin: 0;
+        font-size: 1.75rem;
+        letter-spacing: -0.02em;
+    }
+    
+    .success-alert p {
+        margin-top: 0.75rem;
+        opacity: 0.95;
+    }
+    
+    .success-card .card {
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06), 0 20px 40px rgba(0, 0, 0, 0.04);
+    }
+    
+    .success-card .card-body {
+        padding: 2.5rem;
+    }
+    
+    .detail-item {
+        padding: 1.25rem 1.5rem;
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        border-radius: 12px;
+        margin-bottom: 0.875rem;
+        border: 2px solid #e2e8f0;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .detail-item:hover {
+        background: white;
+        border-color: #cbd5e1;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    }
+    
+    .detail-label {
+        color: #64748b;
+        font-weight: 600;
+        font-size: 0.8125rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.375rem;
+    }
+    
+    .detail-value {
+        color: #1e293b;
+        font-weight: 600;
+        font-size: 1.125rem;
+        letter-spacing: -0.01em;
+    }
+    
+    .success-card .card-footer {
+        padding: 1.75rem 2.5rem;
+        background: #f8fafc;
+    }
+</style>
+
+<div class="success-container">
+    <div class="container">
+        <div class="success-alert mb-4">
+            <h3>Booking Confirmed Successfully!</h3>
+            <p class="mb-0 mt-2" style="font-size: 1.1rem;">Your journey is all set. Have a comfortable trip!</p>
+        </div>
+        
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="success-card">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="mb-0">Booking Details</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="detail-item">
+                                <div class="detail-label">Bus Name</div>
+                                <div class="detail-value">{{book.bus_name}}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">From</div>
+                                <div class="detail-value">{{bus.source}}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">To</div>
+                                <div class="detail-value">{{bus.dest}}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Number of Seats</div>
+                                <div class="detail-value">{{book.nos}} Seat(s)</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Total Price</div>
+                                <div class="detail-value">₹{{book.price}}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Journey Date</div>
+                                <div class="detail-value">{{book.date}}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Departure Time</div>
+                                <div class="detail-value">{{book.time}}</div>
+                            </div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <form action="{% url 'home' %}">
+                                <button type="submit" class="btn btn-primary">Back to Home</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
